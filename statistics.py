@@ -1,3 +1,5 @@
+import json
+
 class Statistics:
     """Track game statistics."""
 
@@ -6,7 +8,14 @@ class Statistics:
         self.settings = game.settings
         self.reset_stats()
         self.game_active = False
-        self.high_score = 0
+        # Read high score
+        try:
+            with open("scores.json") as file:
+                self.high_score = int(json.load(file))
+        except:
+            print("Failed to read high score from scores.json!")
+            self.high_score = 0
+    
         self.level = 1
 
     def reset_stats(self):

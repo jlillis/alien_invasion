@@ -80,6 +80,7 @@ class AlienInvasion:
         for event in pygame.event.get():
             # Exit when the game window is closed
             if event.type == pygame.QUIT:
+                self.scoreboard.save_high_score()
                 sys.exit()
             # Respond to mouse events
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -100,6 +101,7 @@ class AlienInvasion:
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
         elif event.key == pygame.K_q:
+            self.scoreboard.save_high_score()
             sys.exit()
         elif event.key == pygame.K_p and not self.stats.game_active:
             self._start_game()
