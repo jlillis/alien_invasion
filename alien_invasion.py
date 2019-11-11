@@ -2,7 +2,6 @@ import sys
 import pygame
 from time import sleep
 from settings import Settings
-from statistics import Statistics
 from button import Button
 from scoreboard import Scoreboard
 from ship import Ship
@@ -25,9 +24,12 @@ class AlienInvasion:
                 (self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
 
-        # Initialize stats
-        self.stats = Statistics(self)
+        # Game is paused initiallly
         self.active = False
+
+        # Initialize basic logic variables
+        self.level = 1
+        self.ships_remaining = self.settings.ship_limit
 
         # Initialize game elements
         self.player_ship = Ship(self)
@@ -74,7 +76,9 @@ class AlienInvasion:
     def _start_game(self):
         """Start a new game."""
         # Reset game
-        self.stats.reset()
+        self.level = 1
+        self.ships_remaining = self.settings.ship_limit
+        self.scoreboard.reset()
         self.settings.initialize_dynamic_settings()
         self.fleet = Fleet(self)
         self.player_ship.reset()
@@ -85,17 +89,12 @@ class AlienInvasion:
         # Start game
         self.active = True
 
-        # Prep the scoreboard
-        self.scoreboard.prep_score()
-        self.scoreboard.prep_level()
-        self.scoreboard.prep_ships()
-
     def kill_player(self):
         """Handle player death."""
-        if self.stats.ships_remaining > 0:
+        if self.ships_remaining > 0:
             # Decrement number of ships remaining
-            self.stats.ships_remaining -= 1
-            self.scoreboard.prep_ships()
+            self.ships_remaining -= 1
+            self.scoreboard.reset()
 
             # Create new fleet and ship
             self.fleet = Fleet(self)
@@ -106,6 +105,20 @@ class AlienInvasion:
         else:
             self.active = False
             pygame.mouse.set_visible(True)
+
+    def kill_alien(self):
+        """Handle alien kills."""
+        self.scoreboard.set_score(self.scoreboard.score + self.settings.alien_points)
+        
+        # Create a new fleet if all aliens are gone
+        if not self.fleet.aliens:
+            self.player_ship.reset()
+            self.fleet = Fleet(self)
+            # Increment speed (difficulty)
+            self.settings.increase_speed()
+            # Increment level
+            self.level += 1
+            self.scoreboard.prep_level()
 
     def _check_events(self):
         """Respond to keyboard and mouse events."""
@@ -135,7 +148,7 @@ class AlienInvasion:
         elif event.key == pygame.K_q:
             self.scoreboard.save_high_score()
             sys.exit()
-        elif event.key == pygame.K_p and not self.stats.game_active:
+        elif event.key == pygame.K_p and not self.active:
             self._start_game()
 
     def _check_keyup_event(self, event):
@@ -148,7 +161,7 @@ class AlienInvasion:
     def _check_play_button(self, mouse_pos):
         """Start a new game when the player clicks Play."""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
-        if button_clicked and not self.stats.game_active:
+        if button_clicked and not self.active:
             self._start_game()
 
 if __name__ == '__main__':

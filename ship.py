@@ -81,16 +81,4 @@ class Ship(Sprite):
         )
         if collisions:
             for aliens in collisions.values():
-                self.game.stats.score += self.settings.alien_points * len(aliens)
-            self.game.scoreboard.prep_score()
-            self.game.scoreboard.check_high_score()
-        
-        # Create a new fleet if all aliens are gone
-        if not self.game.fleet.aliens:
-            self.bullets.empty()
-            self.game.fleet = Fleet(self)
-            # Increment speed (difficulty)
-            self.game.settings.increase_speed()
-            # Increment level
-            self.game.stats.level += 1
-            self.game.scoreboard.prep_level()
+                self.game.kill_alien()
