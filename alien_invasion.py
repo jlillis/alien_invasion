@@ -128,6 +128,7 @@ class AlienInvasion:
             self.stats.game_active = True
 
             self.scoreboard.prep_score()
+            self.scoreboard.prep_level()
 
     def _fire_bullet(self):
         """Create a new bullet and add it to the bullets group."""
@@ -155,6 +156,7 @@ class AlienInvasion:
             for aliens in collisions.values():
                 self.stats.score += self.settings.alien_points * len(aliens)
             self.scoreboard.prep_score()
+            self.scoreboard.check_high_score()
         
         # Create a new fleet if all aliens are gone
         if not self.aliens:
@@ -162,6 +164,9 @@ class AlienInvasion:
             self._create_fleet()
             # Increment speed (difficulty)
             self.settings.increase_speed()
+            # Increment level
+            self.stats.level += 1
+            self.scoreboard.prep_level()
 
     def _create_fleet(self):
         """Create a fleet of aliens."""
