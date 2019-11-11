@@ -25,7 +25,27 @@ To begin this project, I started by:
 * Implemented scoreboard and remaining ships diplay functionality as detailed in chapter 14.
 * Issues with pylint persist - still need to get around to fixing that.
 
+## 11/11/2019 - Finishing touches
+* Implemented challenge/try-it-yourself feature 14-1: the ability to press P to play.
+* Implemented challenge/try-it-yourself feature 14-5: persistent high scores
+* Fixed 'pygame has no member attribute' errors in pylint by adding the following to VSCode's `settings.json`:
+    ```
+    "python.linting.pylintArgs": [
+        "--extension-pkg-whitelist=pygame"
+    ]
+    ```
+    * Solution was found here: https://stackoverflow.com/questions/50569453/why-does-it-say-that-module-pygame-has-no-init-member
+    * This seems to have fixed other issues with pylint I was unaware of, as pylint has found new issues for me to fix.
+* Completed challenge/try-it-yourself feature 14-7: code refactoring.
+* Tweaked the scoreboard to have labels, and to render fonts with a transparent background.
+    * I made the font render with a transparent background by ommitting the last argument to `pygame.font.render`:
+    ```
+    # Non-transparent background
+    self.high_score_image = self.font.render(score_str, True, self.text_color,
+                                                 self.settings.bg_color)
+    # Transparent background
+    self.high_score_image = self.font.render(score_str, True, self.text_color)
+    ```
+
 ## Next steps:
-* Return to the book and implement challenge (try-it-yourself) features
-* Refactor code where appropriate
-* Customize the game to match retro space invades look'n'feel.
+* Customize the game to match retro Space Invaders look'n'feel.
