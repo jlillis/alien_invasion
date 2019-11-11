@@ -16,7 +16,7 @@ class Fleet():
         num_aliens_x = space_x // (2 * alien_width)
 
         # Calculate number of rows that fit on screen
-        ship_height = game.ship.rect.height
+        ship_height = game.player_ship.rect.height
         space_y = game.settings.screen_height - (3 * alien_height) - ship_height
         num_rows = space_y // (2 * alien_height)
 
@@ -31,8 +31,8 @@ class Fleet():
         self.aliens.update()
 
         # Check for alien-ship collisions
-        if pygame.sprite.spritecollideany(self.game.ship, self.aliens):
-            self.game.ship_hit()
+        if pygame.sprite.spritecollideany(self.game.player_ship, self.aliens):
+            self.game.kill_player()
 
         # Check for aliens hitting bottom of screen.
         self._check_aliens_bottom()
@@ -70,5 +70,5 @@ class Fleet():
         screen_rect = self.game.screen.get_rect()
         for alien in self.aliens.sprites():
             if alien.rect.bottom >= screen_rect.bottom:
-                self.game.ship_hit()
+                self.game.kill_player()
                 break

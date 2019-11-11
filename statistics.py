@@ -6,7 +6,7 @@ class Statistics:
     def __init__(self, game):
         """Initialize statistics."""
         self.settings = game.settings
-        self.reset_stats()
+        self.reset()
         self.game_active = False
         # Read high score
         try:
@@ -18,7 +18,7 @@ class Statistics:
     
         self.level = 1
 
-    def reset_stats(self):
+    def reset(self):
         """Reset statistics to default values."""
         self.ships_remaining = self.settings.ship_limit
         self.score = 0

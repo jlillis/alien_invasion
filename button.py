@@ -15,7 +15,7 @@ class Button:
 
         self.rect = pygame.Rect(0, 0, self.width, self.height)
         self.rect.center = self.screen_rect.center
-        
+
         self._prep_text(text)
 
     def _prep_text(self, text):
@@ -24,7 +24,7 @@ class Button:
         self.text_image_rect = self.text_image.get_rect()
         self.text_image_rect.center = self.rect.center
         
-    def draw_button(self):
+    def draw(self):
         """Render the button on-screen."""
         self.screen.fill(self.button_color, self.rect)
         self.screen.blit(self.text_image, self.text_image_rect)

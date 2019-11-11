@@ -4,10 +4,10 @@ from pygame.sprite import Group
 from ship import Ship
 
 class Scoreboard:
-    "A class to report scoring information."
+    "A class to manage scoring information."
 
     def __init__(self, game):
-        """Initialize scorekeeping attributes."""
+        """Initialize the scoreboard."""
         self.game = game
         self.screen = game.screen
         self.screen_rect = self.screen.get_rect()
@@ -51,7 +51,7 @@ class Scoreboard:
         self.score_rect.right = self.screen_rect.right - 20
         self.score_rect.top = 20
     
-    def show_score(self):
+    def draw(self):
         """Draw score the the screen."""
         self.screen.blit(self.score_image, self.score_rect)
         self.screen.blit(self.high_score_image, self.high_score_rect)

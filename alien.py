@@ -5,7 +5,7 @@ class Alien(Sprite):
     """A class to represent a single alien in the fleet."""
 
     def __init__(self, game):
-        """Initialize the alien and set its starting position."""
+        """Initialize the alien."""
         super().__init__()
         self.screen = game.screen
         self.settings = game.settings
@@ -22,12 +22,12 @@ class Alien(Sprite):
         self.x = float(self.rect.x)
 
     def update(self):
-        """Move the alien to the right."""
+        """Update the alien's position."""
         self.x += self.settings.alien_speed * self.settings.fleet_direction
         self.rect.x = self.x
 
     def check_edges(self):
-        """Return True if alien is at edge of screen."""
+        """Return True if the alien is at edge of screen."""
         screen_rect = self.screen.get_rect()
         if self.rect.right >= screen_rect.right or self.rect.left <= 0:
             return True
