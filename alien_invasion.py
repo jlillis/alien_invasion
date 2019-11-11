@@ -101,6 +101,8 @@ class AlienInvasion:
             self._fire_bullet()
         elif event.key == pygame.K_q:
             sys.exit()
+        elif event.key == pygame.K_p and not self.stats.game_active:
+            self._start_game()
 
     def _check_keyup_event(self, event):
         """Respond to key releases."""
@@ -109,27 +111,31 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
 
+    def _start_game(self):
+        """Start a new game."""
+        # Reset game
+        self.stats.reset_stats()
+        self.settings.initialize_dynamic_settings()
+        self.aliens.empty()
+        self.bullets.empty()
+        self._create_fleet()
+        self.ship.center_ship()
+
+        # Hide cursor
+        pygame.mouse.set_visible(False)
+
+        # Start game
+        self.stats.game_active = True
+
+        self.scoreboard.prep_score()
+        self.scoreboard.prep_level()
+        self.scoreboard.prep_ships()
+
     def _check_play_button(self, mouse_pos):
         """Start a new game when the player clicks Play."""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.stats.game_active:
-            # Reset game
-            self.stats.reset_stats()
-            self.settings.initialize_dynamic_settings()
-            self.aliens.empty()
-            self.bullets.empty()
-            self._create_fleet()
-            self.ship.center_ship()
-
-            # Hide cursor
-            pygame.mouse.set_visible(False)
-
-            # Start game
-            self.stats.game_active = True
-
-            self.scoreboard.prep_score()
-            self.scoreboard.prep_level()
-            self.scoreboard.prep_ships()
+            self._start_game()
 
     def _fire_bullet(self):
         """Create a new bullet and add it to the bullets group."""
