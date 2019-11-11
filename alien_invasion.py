@@ -30,7 +30,6 @@ class AlienInvasion:
 
         # Initialize game elements
         self.ship = Ship(self)
-        self.bullets = pygame.sprite.Group()
         self.fleet = Fleet(self)
         self.play_button = Button(self, "Play")
         self.scoreboard = Scoreboard(self)
@@ -118,7 +117,6 @@ class AlienInvasion:
         # Reset game
         self.stats.reset_stats()
         self.settings.initialize_dynamic_settings()
-        self.bullets.empty()
         self.fleet = Fleet(self)
         self.ship.center_ship()
 
@@ -147,7 +145,7 @@ class AlienInvasion:
 
             # Clear all aliens and bullets
             #self.aliens.empty()
-            self.bullets.empty()
+            #self.bullets.empty()
 
             # Create new fleet and ship
             self.fleet = Fleet(self)
