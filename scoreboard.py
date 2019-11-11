@@ -35,6 +35,7 @@ class Scoreboard:
         high_score = round(self.stats.high_score, -1)
         score_str = "{:,}".format(high_score)
         score_str = str(self.stats.score)
+        score_str = str(self.stats.high_score)
         self.high_score_image = self.font.render(score_str, True, self.text_color, self.settings.bg_color)
         self.high_score_rect = self.high_score_image.get_rect()
         self.high_score_rect.right = self.screen_rect.centerx
