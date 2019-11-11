@@ -16,7 +16,7 @@ class Scoreboard:
         self.score = 0
         self.high_score = self._load_high_score()
 
-        self.text_color = (30, 30, 30)
+        self.text_color = self.settings.text_color
         self.font = pygame.font.SysFont(None, 48)
         self._prep_score()
         self._prep_high_score()
@@ -51,9 +51,8 @@ class Scoreboard:
 
     def prep_level(self):
         """Turn the level in to rendered image."""
-        level_str = str(self.game.level)
-        self.level_image = self.font.render(level_str, True, self.text_color,
-                                            self.settings.bg_color)
+        level_str = f"Level {self.game.level}"
+        self.level_image = self.font.render(level_str, True, self.text_color)
 
         # Position level below the score.
         self.level_rect = self.level_image.get_rect()
@@ -88,9 +87,7 @@ class Scoreboard:
 
     def _prep_score(self):
         """Turn the score into a rendered image."""
-        rounded_score = round(self.score, -1)
-        score_str = "{:,}".format(rounded_score)
-        score_str = str(self.score)
+        score_str = f"Score: {self.score}"
         self.score_image = self.font.render(score_str, True, self.text_color,
                                             self.settings.bg_color)
         self.score_rect = self.score_image.get_rect()
@@ -99,11 +96,8 @@ class Scoreboard:
 
     def _prep_high_score(self):
         """Turn the high score into a rendered image."""
-        high_score = round(self.high_score, -1)
-        score_str = "{:,}".format(high_score)
-        score_str = str(self.high_score)
-        self.high_score_image = self.font.render(score_str, True, self.text_color,
-                                                 self.settings.bg_color)
+        score_str = f"High Score: {self.high_score}"
+        self.high_score_image = self.font.render(score_str, True, self.text_color)
         self.high_score_rect = self.high_score_image.get_rect()
         self.high_score_rect.right = self.screen_rect.centerx
         self.high_score_rect.top = self.score_rect.top

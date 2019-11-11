@@ -23,6 +23,9 @@ class Settings:
         self.speedup_scale = 1.1
         self.initialize_dynamic_settings()
 
+        # Scoreboard settings
+        self.text_color = (0, 0, 0)
+
     def initialize_dynamic_settings(self):
         """Initialize settings that change throughout the game."""
         self.ship_speed = 1.5
