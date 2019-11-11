@@ -129,6 +129,7 @@ class AlienInvasion:
 
             self.scoreboard.prep_score()
             self.scoreboard.prep_level()
+            self.scoreboard.prep_ships()
 
     def _fire_bullet(self):
         """Create a new bullet and add it to the bullets group."""
@@ -227,6 +228,7 @@ class AlienInvasion:
         if self.stats.ships_remaining > 0:
             # Decrement number of ships remaining
             self.stats.ships_remaining -= 1
+            self.scoreboard.prep_ships()
 
             # Clear all aliens and bullets
             self.aliens.empty()

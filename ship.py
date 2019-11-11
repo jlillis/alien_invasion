@@ -1,11 +1,13 @@
 import pygame
+from pygame.sprite import Sprite
 from settings import Settings
 
-class Ship:
+class Ship(Sprite):
     """A class to manage the player ship."""
 
     def __init__(self, game):
         """Initialize the ship and set its starting position."""
+        super().__init__()
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect()
         self.settings = game.settings
