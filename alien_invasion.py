@@ -44,7 +44,7 @@ class AlienInvasion:
 
             if self.stats.game_active:
                 self.ship.update()
-                self._update_bullets()
+                self.ship.update_bullets(self)
                 self.fleet.update()
             
             self._update_screen()
@@ -56,11 +56,11 @@ class AlienInvasion:
         self.screen.fill(self.settings.bg_color)
 
         # Redraw the ship
-        self.ship.blitme()
+        self.ship.draw(self.screen)
 
         # Redraw bullets
-        for bullet in self.bullets.sprites():
-            bullet.draw_bullet()
+        #for bullet in self.bullets.sprites():
+        #    bullet.draw_bullet()
 
         # Redraw fleet
         self.fleet.draw()
@@ -99,7 +99,7 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True
         elif event.key == pygame.K_SPACE:
-            self._fire_bullet()
+            self.ship.fire_bullet()
         elif event.key == pygame.K_q:
             self.scoreboard.save_high_score()
             sys.exit()
@@ -137,44 +137,6 @@ class AlienInvasion:
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.stats.game_active:
             self._start_game()
-
-    def _fire_bullet(self):
-        """Create a new bullet and add it to the bullets group."""
-        if len(self.bullets) < self.settings.bullets_allowed:
-            self.bullets.add(Bullet(self))
-
-    def _update_bullets(self):
-        """Update position of bullets and get rid of old bullets."""
-        self.bullets.update()
-        for bullet in self.bullets.copy():
-            if bullet.rect.bottom <= 0:
-                self.bullets.remove(bullet)
-
-        # Check for bullet collisions
-        self._check_bullet_collisions()
-        
-
-    def _check_bullet_collisions(self):
-        """Check for bullet collisions."""
-        # Check for bullets that have collided with aliens
-        collisions = pygame.sprite.groupcollide(
-            self.bullets, self.fleet.aliens, True, True
-        )
-        if collisions:
-            for aliens in collisions.values():
-                self.stats.score += self.settings.alien_points * len(aliens)
-            self.scoreboard.prep_score()
-            self.scoreboard.check_high_score()
-        
-        # Create a new fleet if all aliens are gone
-        if not self.fleet.aliens:
-            self.bullets.empty()
-            self.fleet = Fleet(self)
-            # Increment speed (difficulty)
-            self.settings.increase_speed()
-            # Increment level
-            self.stats.level += 1
-            self.scoreboard.prep_level()
 
     def ship_hit(self):
         """Respond to the player's ship being hit by an alien."""
