@@ -36,7 +36,7 @@ class Fleet():
 
         # Check for aliens hitting bottom of screen.
         self._check_aliens_bottom()
-    
+
     def draw(self):
         """Draws the fleet."""
         # Draw all aliens in the fleet
@@ -62,7 +62,7 @@ class Fleet():
         """Drop the fleet one row and change direction."""
         for alien in self.aliens.sprites():
             alien.rect.y += self.game.settings.fleet_drop_speed
-        
+
         self.game.settings.fleet_direction *= -1
 
     def _check_aliens_bottom(self):

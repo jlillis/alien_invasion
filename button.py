@@ -23,7 +23,7 @@ class Button:
         self.text_image = self.font.render(text, True, self.text_color, self.button_color)
         self.text_image_rect = self.text_image.get_rect()
         self.text_image_rect.center = self.rect.center
-        
+
     def draw(self):
         """Render the button on-screen."""
         self.screen.fill(self.button_color, self.rect)

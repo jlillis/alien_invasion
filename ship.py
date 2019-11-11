@@ -1,8 +1,6 @@
 import pygame
 from pygame.sprite import Sprite
-from settings import Settings
 from bullet import Bullet
-from fleet import Fleet
 
 class Ship(Sprite):
     """A class to manage the player ship."""
@@ -42,7 +40,7 @@ class Ship(Sprite):
         self.rect.x = self.x
         self._update_bullets()
 
-    def draw(self, screen):
+    def draw(self):
         """Draw the ship at its current location."""
         self.screen.blit(self.image, self.rect)
         #self.bullets.draw(screen)

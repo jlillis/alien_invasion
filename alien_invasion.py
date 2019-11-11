@@ -47,7 +47,7 @@ class AlienInvasion:
             if self.active:
                 self.player_ship.update()
                 self.fleet.update()
-            
+
             # Draw the game
             self._draw()
 
@@ -58,7 +58,7 @@ class AlienInvasion:
         self.screen.fill(self.settings.bg_color)
 
         # Redraw the player ship
-        self.player_ship.draw(self.screen)
+        self.player_ship.draw()
 
         # Redraw the alien fleet
         self.fleet.draw()
@@ -109,7 +109,7 @@ class AlienInvasion:
     def kill_alien(self):
         """Handle alien kills."""
         self.scoreboard.set_score(self.scoreboard.score + self.settings.alien_points)
-        
+
         # Create a new fleet if all aliens are gone
         if not self.fleet.aliens:
             self.player_ship.reset()
@@ -136,7 +136,7 @@ class AlienInvasion:
                 self._check_keydown_event(event)
             elif event.type == pygame.KEYUP:
                 self._check_keyup_event(event)
-    
+
     def _check_keydown_event(self, event):
         """Respond to keypresses."""
         if event.key == pygame.K_RIGHT:
